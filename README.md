@@ -34,26 +34,31 @@ Setup instructions in README, mention if you have used an AI tool
 <p>status(500) {status: false,message: `Signup failed. Try again later`}</p>
 
 <h4>2) Login</h4>
-Success Response:
-Status(200)
-{
-    "success": true,
-    "accessToken": "User signed up successfully."
-}
- Req Body: {
+<p>Req Body: {
   "email": "<email>",
   "password": "<password>",
-}
+}</p>
+<p>Success Response:</p>
+<p>Status(200) {
+    "success": true,
+    "accessToken": "User signed up successfully."
+}</p>
+
+<p>
 Validation Failure status code(400) [validation applied for email,password]
 {
     "status": false,
     "message": "Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol"
 }
+</p>
+<p>
 Server Failure status(500)
 {
         status: false,
         message: `Login failed. Try again later`,
       }
+
+</p>
 
 <h4>3) Today's Prediction:</h4>
 Request: http://localhost:3001/horoscope/history
