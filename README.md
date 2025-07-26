@@ -137,7 +137,10 @@ Dependency Inversion: Abstracted the database service behind an interface. This 
 <p>3) Migration Scripts for DB.</p>
 <p>4) Use Knex/Other ORM</p>
 <p>5) Complete implementation of refresh token.</p>
-
+<p>AI USED:CHAT GPT</p>
+<p>Used for SQL query optimisation.(Helped me to write a single function handling both today and history api)</p>
+<p>Used for REGEX pattern</p>
+<p>Cleanups</p>
 
 <h2>How will this scale if each user gets personalised horoscope instead of zodiac zodiac-specific horoscope.</h2>
 <p>Service splitting/ Microservice Create a Horoscope Service.Personal predication(Takes in name, email, birthdate,birthtime).</p>
