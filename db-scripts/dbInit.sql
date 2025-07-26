@@ -11,3 +11,11 @@ CREATE TABLE IF NOT EXISTS user_table(
 
 );
 
+CREATE TABLE IF NOT EXISTS refresh_token_table (
+    token_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES user_table(user_id) ON DELETE CASCADE,
+    refresh_token TEXT NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT (now() + interval '2 days'),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);

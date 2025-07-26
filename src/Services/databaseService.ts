@@ -3,7 +3,7 @@ const { Pool } = pkg;
 import fs from "fs";
 import path from "path";
 import { DataBaseServiceInterface } from "../interfaces";
-
+import { DbTables } from "../enums";
 export class DatabaseService implements DataBaseServiceInterface {
   private static pool: pkg.Pool | null = null;
   constructor() {}
@@ -80,6 +80,103 @@ export class DatabaseService implements DataBaseServiceInterface {
     } catch (error) {
       throw new Error(
         `Error while executing DB scripts: ${(error as Error).message}`
+      );
+    }
+  }
+  public async getUserDetails({
+    identifier,
+    columnName,
+  }: {
+    identifier: string;
+    columnName: string;
+  }): Promise<{
+    success: boolean;
+    userDetails: {
+      user_id: string;
+      user_name: string;
+      user_email: string;
+      user_password: string;
+      user_birthdate: string;
+      user_zodiac: string;
+      created_at: Date;
+      updated_at: Date;
+    }[];
+  }> {
+    try {
+      const pool = this.getDbPool();
+      const userDetails = await pool.query(
+        `SELECT * FROM ${DbTables.USER_TABLE} WHERE ${columnName}=$1`,
+        [identifier]
+      );
+      if (userDetails.rowCount) {
+        return {
+          success: true,
+          userDetails: userDetails.rows,
+        };
+      } else {
+        return {
+          success: false,
+          userDetails: [],
+        };
+      }
+    } catch (error) {
+      throw new Error(
+        `Error occured when getting userDetails: ${(error as Error).message}`
+      );
+    }
+  }
+  public async insertUserDetails(userDetails: {
+    userName: string;
+    userEmail: string;
+    userPassword: string;
+    userBirthdate: string;
+    userZodiacSign: string;
+  }) {
+    try {
+      const pool = this.getDbPool();
+      const {
+        userName,
+        userEmail,
+        userPassword,
+        userBirthdate,
+        userZodiacSign,
+      } = userDetails;
+      const insertionResult = await pool.query(
+        `INSERT INTO ${DbTables.USER_TABLE} (user_name,user_email,user_password,user_birthdate,user_zodiac) VALUES ($1, $2, $3, $4, $5)`,
+        [userName, userEmail, userPassword, userBirthdate, userZodiacSign]
+      );
+      if (insertionResult.rowCount !== 1) {
+        return {
+          success: false,
+        };
+      }
+      return {
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        `Error when inserting userDetails: ${(error as Error).message}`
+      );
+    }
+  }
+  public async storeRefreshToken(userId: string, refreshToken: string) {
+    try {
+      const pool = this.getDbPool();
+      const insertionResult = await pool.query(
+        `INSERT INTO ${DbTables.REFRESH_TOKEN_TABLE} (user_id,refresh_token) VALUES ($1,$2)`,
+        [userId, refreshToken]
+      );
+      if (insertionResult.rowCount !== 1) {
+        return {
+          success: false,
+        };
+      }
+      return {
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        `Error when inserting refresh token table: ${(error as Error).message}`
       );
     }
   }
