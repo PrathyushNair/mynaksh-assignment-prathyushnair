@@ -29,7 +29,11 @@ Setup instructions in README, mention if you have used an AI tool
     "status": false,
     "message": "Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol"
 }</p>
-
+<p>Rate Limit Failure</p>
+<p>Status(429) {
+    "success": false,
+    "message": "Rate limit exceeded. Try again in <calculated seconds> seconds."
+}</p>
 <p>Server Failure</p>
 <p>status(500) {status: false,message: `Signup failed. Try again later`}</p>
 
@@ -50,7 +54,11 @@ Validation Failure status code(400) [validation applied for email,password]
     "status": false,
     "message": "Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol"
 }
-</p>
+<p>Rate Limit Failure</p>
+<p>Status(429) {
+    "success": false,
+    "message": "Rate limit exceeded. Try again in <calculated seconds> seconds."
+}</p>
 <p>
 Server Failure status(500)
 {
@@ -61,9 +69,10 @@ Server Failure status(500)
 </p>
 
 <h4>3) Today's Prediction:</h4>
-Request: http://localhost:3001/horoscope/history
-Authorization: Bearer "<Token>"
-  Response Status Code(200)
+<p>Request: http://localhost:3001/horoscope/today</p>
+<p>Authorization: Bearer "{Token}"</p>
+ <p>
+ Response Status Code(200)
   {
     "success": true,
     "horoscopeReading": [
@@ -73,15 +82,24 @@ Authorization: Bearer "<Token>"
         }
     ]
 }
-
+</p>
+Unauthorised Status(401) {
+    "success": false,
+    "message": "Unauthorized: Invalid token"
+}
+<p>
 Server Error Status(500)
 {
     "success": false,
     "message": "An error occured.Please try later."
 }
+</p>
+
 <h4>4) History(7 days)</h4>
-
- Response Status Code(200) (You will have 7 records of past 7 days if available)
+<p>Request: http://localhost:3001/horoscope/history</p>
+<p>Authorization: Bearer "{Token}"</p>
+ <p>
+Response Status Code(200) (You will have 7 records of past 7 days if available)
   {
     "success": true,
     "horoscopeReading": [
@@ -91,12 +109,20 @@ Server Error Status(500)
         }
     ]
 }
+</p>
+<p>
+Unauthorised Status(401) {
+    "success": false,
+    "message": "Unauthorized: Invalid token"
+}</p>
 
-Server Error Status(500)
+
+<p>Server Error Status(500)
 {
     "success": false,
     "message": "An error occured.Please try later."
 }
+</p>
 
 <h2>A brief note on:Design decision</h2>
 Separation of Concerns:  Used Controller and Service architecture for this. Controllers handle HTTP interactions, while services deal with business logic.
