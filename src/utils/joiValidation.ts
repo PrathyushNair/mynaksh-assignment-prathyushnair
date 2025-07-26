@@ -25,7 +25,7 @@ export async function validateSignUpDetails(userDetails: {
       .pattern(
         new RegExp(/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$/)
       )
-      .message("Invalid birthday formant."),
+      .message("Invalid birthday format."),
   });
   try {
     const result = await schema.validateAsync(userDetails);

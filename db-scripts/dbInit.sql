@@ -19,3 +19,13 @@ CREATE TABLE IF NOT EXISTS refresh_token_table (
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
+
+CREATE TABLE user_horoscope_history (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES user_table(user_id) ON DELETE CASCADE,
+  horoscope_date TIMESTAMPTZ DEFAULT now(),
+  zodiac_sign  TEXT NOT NULL,
+  horoscope TEXT NOT NULL,
+  UNIQUE (user_id, horoscope_date),
+  created_at TIMESTAMPTZ DEFAULT now() 
+)
