@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon --watch src --ext ts --exec ts-node src/server.ts"
+    "start-server": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "start-db": "docker compose up",
+    "create-tables": "ts-node src/dbInit.ts"
   },
   "keywords": [],
   "author": "",
