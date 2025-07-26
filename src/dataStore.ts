@@ -12,3 +12,19 @@ export const zodiac = [
     { sign: "Scorpio", from: [10, 23], to: [11, 21] },
     { sign: "Sagittarius", from: [11, 22], to: [12, 21] },
   ];
+
+
+  export const horoscopeData: Record<string, string> = {
+    Aries: "Today is a great day to focus on personal growth and relationships.",
+    Taurus: "You may encounter a financial opportunity. Stay grounded.",
+    Gemini: "Communication is key today. Express your ideas clearly.",
+    Cancer: "Spend time with loved ones and reflect on your emotions.",
+    Leo: "Take the lead on a project. Your confidence will inspire others.",
+    Virgo: "A good day to organize your thoughts and space.",
+    Libra: "Balance is essential. Take time for both work and rest.",
+    Scorpio: "Trust your instincts. Secrets may come to light today.",
+    Sagittarius: "Adventure calls. Try something new or spontaneous.",
+    Capricorn: "Stay disciplined. A reward is coming your way.",
+    Aquarius: "Innovation will help you solve a lingering issue.",
+    Pisces: "Be creative. Artistic energy is especially strong today."
+  };

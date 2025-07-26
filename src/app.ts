@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { authRouter } from "./Router/authRouter";
+import { horoScopeRouter } from "./Router/horoscopeRouter";
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRouter);
+app.use("/horoscope",horoScopeRouter );
 export default app;

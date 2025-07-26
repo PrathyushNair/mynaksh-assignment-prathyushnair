@@ -180,6 +180,65 @@ export class DatabaseService implements DataBaseServiceInterface {
       );
     }
   }
+  public async insertToHoroscopeHistory(
+    userId: string,
+    todaysReading: string,
+    zodiacSign: string
+  ) {
+    try {
+      const pool = this.getDbPool();
+      const date = new Date().toISOString();
+      const insertionResult = await pool.query(
+        `INSERT INTO ${DbTables.HOROSCOPE_HISTORY_TABLE} (user_id,horoscope,horoscope_date,zodiac_sign) VALUES ($1,$2,$3,$4)`,
+        [userId, todaysReading, date, zodiacSign]
+      );
+      if (insertionResult.rowCount !== 1) {
+        return {
+          success: false,
+        };
+      }
+      return {
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        `Error when inserting to horoscope history table: ${
+          (error as Error).message
+        }`
+      );
+    }
+  }
+  public async getFromHoroscopeHistory(userId: string, numberOfDays: number) {
+    try {
+      const pool = this.getDbPool();
+      const query = `
+  SELECT "horoscope","horoscope_date" as date FROM "user_horoscope_history"
+  WHERE "user_id"=$1
+  AND "horoscope_date" >= CURRENT_DATE - $2::integer
+  ORDER BY "horoscope_date" DESC;
+`;
+
+      const values = [userId, numberOfDays];
+      const horoscopeReading = await pool.query(query, values);
+      if (horoscopeReading.rowCount) {
+        return {
+          success: true,
+          horoscopeReading: horoscopeReading.rows,
+        };
+      } else {
+        return {
+          success: false,
+          horoscopeReading: [],
+        };
+      }
+    } catch (error) {
+      throw new Error(
+        `Error when fetching from horoscope history table: ${
+          (error as Error).message
+        }`
+      );
+    }
+  }
 }
 
 
